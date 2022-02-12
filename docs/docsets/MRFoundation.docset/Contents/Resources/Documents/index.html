@@ -147,13 +147,86 @@
           <div class="section-content top-matter">
             
             <h1 id='mrfoundation' class='heading'>MRFoundation</h1>
-<h3 id='a-library-to-complement-the-swift-standard-library' class='heading'>A library to complement the Swift Standard Library.</h3>
-<h3 id='installation' class='heading'>Installation</h3>
+
+<p><a href="https://img.shields.io/cocoapods/v/MRFoundation.svg"><img src="https://img.shields.io/cocoapods/v/MRFoundation.svg" alt="CocoaPods Compatible"></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage Compatible"></a>
+<a href="https://www.swift.org/package-manager/"><img src="https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat" alt="SPM Compatible"></a>
+<a href="http://cocoadocs.org/docsets/MRFoundation"><img src="https://img.shields.io/cocoapods/p/MRFoundation.svg?style=flat" alt="Platform"></a></p>
+
+<p>MRFoundation is a library to complement the Swift Standard Library.</p>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<ul>
+<li>iOS 11.0+</li>
+<li>Xcode 11+</li>
+<li>Swift 5.1+</li>
+</ul>
+<h2 id='communication' class='heading'>Communication</h2>
+
+<ul>
+<li>If you need to <strong>find or understand an API</strong>, check <a href="https://djmixroman.github.io/MRFoundation/">our documentation</a>.</li>
+<li>If you <strong>found a bug</strong>, open an issue. The more detail the better!</li>
+<li>If you <strong>want to contribute</strong>, submit a pull request.</li>
+</ul>
+<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='cocoapods' class='heading'>CocoaPods</h3>
+
+<p><a href="https://cocoapods.org">CocoaPods</a> is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate MRFoundation into your Xcode project using CocoaPods, specify it in your <code>Podfile</code>:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MRFoundation'</span>
 </code></pre>
-<h3 id='authors' class='heading'>Authors</h3>
+<h3 id='carthage' class='heading'>Carthage</h3>
 
-<p>Roman Mogutnov</p>
+<p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks. To integrate MRFoundation into your Xcode project using Carthage, specify it in your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "djmixroman/MRFoundation" ~&gt; 1.0
+</code></pre>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
+
+<p>The <a href="https://swift.org/package-manager/">Swift Package Manager</a> is a tool for automating the distribution of Swift code and is integrated into the <code>swift</code> compiler. It is in early development, but MRFoundation does support its use on supported platforms.</p>
+
+<p>Once you have your Swift package set up, adding MRFoundation as a dependency is as easy as adding it to the <code>dependencies</code> value of your <code>Package.swift</code>.</p>
+<pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/djmixroman/MRFoundation.git"</span><span class="p">,</span> <span class="o">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.0"</span><span class="p">))</span>
+<span class="p">]</span>
+</code></pre>
+<h3 id='manually' class='heading'>Manually</h3>
+
+<p>If you prefer not to use either of the aforementioned dependency managers, you can integrate MRFoundation into your project manually.</p>
+<h4 id='embedded-framework' class='heading'>Embedded Framework</h4>
+
+<ul>
+<li>Open up Terminal, <code>cd</code> into your top-level project directory, and run the following command &ldquo;if&rdquo; your project is not initialized as a git repository:</li>
+</ul>
+<pre class="highlight shell"><code><span class="nv">$ </span>git init
+</code></pre>
+
+<ul>
+<li>Add MRFoundation as a git <a href="http://git-scm.com/docs/git-submodule">submodule</a> by running the following command:</li>
+</ul>
+<pre class="highlight shell"><code><span class="nv">$ </span>git submodule add https://github.com/djmixroman/MRFoundation.git
+</code></pre>
+
+<ul>
+<li><p>Open the new <code>MRFoundation</code> folder, and drag the <code>MRFoundation.xcodeproj</code> into the Project Navigator of your application&rsquo;s Xcode project.</p>
+
+<blockquote>
+<p>It should appear nested underneath your application&rsquo;s blue project icon. Whether it is above or below all the other Xcode groups does not matter.</p>
+</blockquote></li>
+<li><p>Select the <code>MRFoundation.xcodeproj</code> in the Project Navigator and verify the deployment target matches that of your application target.</p></li>
+<li><p>Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the &ldquo;Targets&rdquo; heading in the sidebar.</p></li>
+<li><p>In the tab bar at the top of that window, open the &ldquo;General&rdquo; panel.</p></li>
+<li><p>Click on the <code>+</code> button under the &ldquo;Embedded Binaries&rdquo; section.</p></li>
+<li><p>You will see <code>MRFoundation.xcodeproj</code> folder.</p></li>
+<li><p>And that&rsquo;s it!</p></li>
+</ul>
+
+<blockquote>
+<p>The <code>MRFoundation.framework</code> is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.</p>
+</blockquote>
+
+<hr>
+<h2 id='license' class='heading'>License</h2>
+
+<p>MRFoundation is released under the MIT license. <a href="https://github.com/djmixroman/MRFoundation/blob/master/LICENSE.md">See LICENSE</a> for details.</p>
 
           </div>
         </section>

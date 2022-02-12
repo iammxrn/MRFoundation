@@ -1,4 +1,4 @@
-Copyright (c) 2022 MoneySwap OU (mercuryo.io)
+Copyright (c) 2022 Roman Mogutnov (Mix-Roman)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
