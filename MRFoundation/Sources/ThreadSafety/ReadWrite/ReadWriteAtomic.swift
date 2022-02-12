@@ -1,0 +1,41 @@
+//
+//  ReadWriteAtomic.swift
+//  MRFoundation
+//
+//  Created by Roman Mogutnov on 09.02.2022.
+//  Copyright © 2022 Roman Mogutnov. All rights reserved.
+//
+
+import Foundation
+
+/// Atomic based on ReadWriteLock.
+@propertyWrapper
+public final class ReadWriteAtomic<Value>: Atomic {
+    
+    
+    // MARK: - Public Properties
+    
+    public var wrappedValue: Value {
+        get {
+            value
+        } set {
+            value = newValue
+        }
+    }
+    
+    public var projectedValue: ReadWriteAtomic<Value> { self }
+    
+    
+    // MARK: - Internal Properties
+    
+    let _lock = ReadWriteLock()
+    
+    var _unsafeWrappedValue: Value
+    
+    
+    // MARK: - Init
+    
+    public init(wrappedValue: Value) {
+        self._unsafeWrappedValue = wrappedValue
+    }
+}

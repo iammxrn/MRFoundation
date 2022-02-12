@@ -1,0 +1,8 @@
+author: Roman Mogutnov
+author_url: https://twitter.com/djmixroman
+github_url: https://github.com/djmixroman/MRFoundation
+root_url: https://djmixroman.github.io/MRFoundation/
+module: MRFoundation
+output: docs
+theme: fullwidth
+xcodebuild_arguments: [-scheme, 'MRFoundation']

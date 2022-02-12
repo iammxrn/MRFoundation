@@ -1,0 +1,11 @@
+framework module MRFoundation {
+  umbrella header "MRFoundation.h"
+
+  export *
+  module * { export * }
+}
+
+module MRFoundation.Swift {
+    header "MRFoundation-Swift.h"
+    requires objc
+}
