@@ -6,7 +6,7 @@
 //  Copyright © 2022 Roman Mogutnov. All rights reserved.
 //
 
-import MRFoundation
+import Foundation
 import Security
 
 

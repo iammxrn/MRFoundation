@@ -1,0 +1,28 @@
+{
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
+  "commitish" : "e472b035f63a1f8c77106dae2fb7f33cee5a086c",
+  "iOS" : [
+    {
+      "swiftToolchainVersion" : "5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)",
+      "hash" : "092482e6c7fde57e4fd3ca5d1007393366a2925a0bcc886054d1ed8946890cb2",
+      "name" : "MRFoundation",
+      "container" : "MRFoundation.xcframework",
+      "identifier" : "ios-arm64_x86_64-simulator"
+    },
+    {
+      "swiftToolchainVersion" : "5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)",
+      "hash" : "db2e2b238382f6816189da6a3106dee37d344ff1cb34e8a6c91c60290fdbb574",
+      "name" : "MRFoundation",
+      "container" : "MRFoundation.xcframework",
+      "identifier" : "ios-arm64"
+    }
+  ]
+}
