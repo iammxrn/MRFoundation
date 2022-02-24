@@ -14,6 +14,8 @@
 		8F2F934827B4378200AF9BB8 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C9627B435E500A7AE45 /* Atomic.swift */; };
 		8F2F934927B4378200AF9BB8 /* Locking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C9A27B435E500A7AE45 /* Locking.swift */; };
 		8F2F934B27B4392100AF9BB8 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F934A27B4392100AF9BB8 /* UserDefaultsManager.swift */; };
+		8F7526A827BE5AFE00C313CC /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7526A727BE5AFE00C313CC /* TimeFormatter.swift */; };
+		8F7526AC27BE5CF300C313CC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7526AB27BE5CF300C313CC /* String+Extension.swift */; };
 		8FD77C7627B4336000A7AE45 /* MRFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD77C7527B4336000A7AE45 /* MRFoundation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FD77C8027B4342500A7AE45 /* MRLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C7F27B4342500A7AE45 /* MRLog.swift */; };
 		8FD77C8227B4345E00A7AE45 /* MRError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C8127B4345E00A7AE45 /* MRError.swift */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		8F2F934A27B4392100AF9BB8 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		8F7526A727BE5AFE00C313CC /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
+		8F7526AB27BE5CF300C313CC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8FD77C7227B4336000A7AE45 /* MRFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MRFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD77C7527B4336000A7AE45 /* MRFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRFoundation.h; sourceTree = "<group>"; };
 		8FD77C7F27B4342500A7AE45 /* MRLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRLog.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 				8FD77C8C27B4354C00A7AE45 /* Dictionary+Extension.swift */,
 				8FD77C8A27B4353500A7AE45 /* Comparable+Extension.swift */,
 				8FD77C8E27B4356000A7AE45 /* FloatingPoint+Extension.swift */,
+				8F7526AB27BE5CF300C313CC /* String+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				8FD77C7F27B4342500A7AE45 /* MRLog.swift */,
 				8FD77C8127B4345E00A7AE45 /* MRError.swift */,
 				8F2F934A27B4392100AF9BB8 /* UserDefaultsManager.swift */,
+				8F7526A727BE5AFE00C313CC /* TimeFormatter.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -222,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F7526AC27BE5CF300C313CC /* String+Extension.swift in Sources */,
 				8F2F934627B4378200AF9BB8 /* ReadWriteAtomic.swift in Sources */,
 				8F2F934527B4378200AF9BB8 /* UnfairLock.swift in Sources */,
 				8FD77C8B27B4353500A7AE45 /* Comparable+Extension.swift in Sources */,
@@ -235,6 +242,7 @@
 				8F2F934B27B4392100AF9BB8 /* UserDefaultsManager.swift in Sources */,
 				8FD77C8D27B4354C00A7AE45 /* Dictionary+Extension.swift in Sources */,
 				8FD77C8F27B4356000A7AE45 /* FloatingPoint+Extension.swift in Sources */,
+				8F7526A827BE5AFE00C313CC /* TimeFormatter.swift in Sources */,
 				8F2F934427B4378200AF9BB8 /* UnfairAtomic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
