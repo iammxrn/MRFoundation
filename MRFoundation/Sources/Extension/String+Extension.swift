@@ -14,12 +14,12 @@ import Foundation
 extension String {
     
     /// Returns a localized string with empty comment.
-    var localized: String {
+    public var localized: String {
         return NSLocalizedString(self, comment: "")
     }
     
     /// Returns a localized string using a given format a template.
-    static func localized(_ format: String, _ arguments: CVarArg...) -> String {
+    public static func localized(_ format: String, _ arguments: CVarArg...) -> String {
         return String(format: format.localized, locale: Locale.current, arguments: arguments)
     }
     
@@ -30,7 +30,7 @@ extension String {
 
 extension String {
     
-    var permanentHash: UInt64 {
+    public var permanentHash: UInt64 {
         var result: UInt64 = .djbPrimeNumber
         let buf = [UInt8](self.utf8)
         for b in buf {
@@ -47,4 +47,10 @@ extension UInt64 {
     fileprivate static var djbPrimeNumber: UInt64 { 5_381 }
     
     fileprivate static var shiftCount: UInt64 { 127 }
+}
+
+
+extension String {
+    
+    static var defaultDomain: String { "com.mix-roman.MRFoundation" }
 }
