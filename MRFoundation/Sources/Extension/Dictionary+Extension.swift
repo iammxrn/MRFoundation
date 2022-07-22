@@ -3,7 +3,7 @@
 //  MRFoundation
 //
 //  Created by Roman Mogutnov on 09.02.2022.
-//  Copyright © 2022 Roman Mogutnov. All rights reserved.
+//  Copyright © 2022 mxrn. All rights reserved.
 //
 
 import Foundation
@@ -28,8 +28,8 @@ extension Dictionary {
         .init(uniqueKeysWithValues: try map { (try transform($0.key), $0.value) })
     }
     
-    func mapKeys<Transformed>(_ transform: (Key) throws -> Transformed,
-                              uniquingKeysWith combine: (Value, Value) throws -> Value) rethrows -> [Transformed: Value] {
+    public func mapKeys<Transformed>(_ transform: (Key) throws -> Transformed,
+                                     uniquingKeysWith combine: (Value, Value) throws -> Value) rethrows -> [Transformed: Value] {
         try .init(map { (try transform($0.key), $0.value) }, uniquingKeysWith: combine)
     }
     

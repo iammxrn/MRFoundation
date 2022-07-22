@@ -1,6 +1,6 @@
 // swift-tools-version:5.3
 //
-// Copyright (c) 2022 Roman Mogutnov (Mix-Roman)
+// Copyright (c) 2022 Roman Mogutnov (mxrn)
 //
 
 import PackageDescription

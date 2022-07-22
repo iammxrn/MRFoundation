@@ -3,7 +3,7 @@
 //  MRFoundation
 //
 //  Created by Roman Mogutnov on 17.02.2022.
-//  Copyright © 2022 Roman Mogutnov. All rights reserved.
+//  Copyright © 2022 mxrn. All rights reserved.
 //
 
 import Foundation
@@ -52,5 +52,5 @@ extension UInt64 {
 
 extension String {
     
-    static var defaultDomain: String { "com.mix-roman.MRFoundation" }
+    static var defaultDomain: String { "com.mxrn.MRFoundation" }
 }

@@ -3,7 +3,7 @@
 //  MRFoundation
 //
 //  Created by Roman Mogutnov on 09.02.2022.
-//  Copyright © 2022 Roman Mogutnov. All rights reserved.
+//  Copyright © 2022 mxrn. All rights reserved.
 //
 
 import Foundation
@@ -18,7 +18,7 @@ extension Comparable {
     /// - Parameter range: specified range
     /// - Returns: A number based on specified range. If the number is less than the lower bound,
     /// the result will be the value of the lower bound, if higher - upper.
-    func clamped(to range: ClosedRange<Self>) -> Self {
+    public func clamped(to range: ClosedRange<Self>) -> Self {
         return clamped(min: range.lowerBound, max: range.upperBound)
     }
     
