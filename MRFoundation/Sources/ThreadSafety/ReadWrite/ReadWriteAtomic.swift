@@ -9,6 +9,9 @@
 import Foundation
 
 /// Atomic based on ReadWriteLock.
+///
+/// - Important: This property wrapper guarantees that the wrapped value will be thread-safe, as well as the absence of any side effects.
+///
 @propertyWrapper
 public final class ReadWriteAtomic<Value>: Atomic {
     
@@ -18,8 +21,8 @@ public final class ReadWriteAtomic<Value>: Atomic {
     public var wrappedValue: Value {
         get {
             value
-        } set {
-            value = newValue
+        } _modify {
+            yield &value
         }
     }
     
