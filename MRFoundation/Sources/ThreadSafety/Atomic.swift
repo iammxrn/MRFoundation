@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol Atomic: AnyObject {
     
     associatedtype Value
@@ -19,39 +18,18 @@ protocol Atomic: AnyObject {
     
     var _unsafeWrappedValue: Value { get set }
     
-    @discardableResult
-    func load<Result>(_ action: (Value) throws -> Result) rethrows -> Result
-    
-    @discardableResult
-    func store<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result
 }
 
 extension Atomic {
     
     var value: Value {
         get {
-            load { $0 }
-        } set {
-            swap(newValue)
+            self._lock.rd_lock(); defer { self._lock.rd_unlock() }
+            return _unsafeWrappedValue
+        } _modify {
+            self._lock.wr_lock(); defer { self._lock.wr_unlock() }
+            yield &self._unsafeWrappedValue
         }
     }
-    
-    @discardableResult
-    func load<Result>(_ action: (Value) throws -> Result) rethrows -> Result {
-        try _lock.readLocked { try action(_unsafeWrappedValue) }
-    }
-    
-    @discardableResult
-    func store<Result>(_ action: (inout Value) throws -> Result) rethrows -> Result {
-        try _lock.writeLocked { try action(&_unsafeWrappedValue) }
-    }
-    
-    @discardableResult
-    private func swap(_ newValue: Value) -> Value {
-        store { (value: inout Value) in
-            let oldValue = value
-            value = newValue
-            return oldValue
-        }
-    }
+
 }

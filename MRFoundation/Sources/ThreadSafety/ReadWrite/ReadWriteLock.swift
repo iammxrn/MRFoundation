@@ -8,48 +8,45 @@
 
 import Foundation
 
-
-final class ReadWriteLock {
+public final class ReadWriteLock {
     
     
     // MARK: - Private Properties
     
-    private var readWriteLock: pthread_rwlock_t
+    private let readWriteLock: UnsafeMutablePointer<pthread_rwlock_t>
     
     
     // MARK: - Init
     
-    init() {
-        readWriteLock = pthread_rwlock_t()
-        pthread_rwlock_init(&readWriteLock, nil)
+    public required init() {
+        self.readWriteLock = UnsafeMutablePointer<pthread_rwlock_t>.allocate(capacity: 1)
+        let err = pthread_rwlock_init(readWriteLock, nil)
+        precondition(err == 0, "\(#function) failed in pthread_rwlock with error \(err)")   
     }
     
     deinit {
-        pthread_rwlock_destroy(&readWriteLock)
+        pthread_rwlock_destroy(readWriteLock)
+        readWriteLock.deallocate()
     }
     
     
     // MARK: - Public Methods
     
-    func readLock() {
-        pthread_rwlock_rdlock(&readWriteLock)
+    public func readLock() {
+        let err = pthread_rwlock_rdlock(readWriteLock)
+        precondition(err == 0, "\(#function) failed in pthread_rwlock with error \(err)")
     }
     
-    func writeLock() {
-        pthread_rwlock_wrlock(&readWriteLock)
+    public func writeLock() {
+        let err = pthread_rwlock_wrlock(readWriteLock)
+        precondition(err == 0, "\(#function) failed in pthread_rwlock with error \(err)")
     }
     
-    func unlock() {
-        pthread_rwlock_unlock(&readWriteLock)
+    public func unlock() {
+        let err = pthread_rwlock_unlock(readWriteLock)
+        precondition(err == 0, "\(#function) failed in pthread_rwlock with error \(err)")
     }
     
-    func tryRead() -> Bool {
-        pthread_rwlock_tryrdlock(&readWriteLock) == 0
-    }
-    
-    func tryWrite() -> Bool {
-        pthread_rwlock_trywrlock(&readWriteLock) == 0
-    }
 }
 
 
@@ -57,17 +54,20 @@ final class ReadWriteLock {
 
 extension ReadWriteLock: Locking {
     
-    @discardableResult
-    func readLocked<Result>(_ action: () throws -> Result) rethrows -> Result {
+    func rd_lock() {
         readLock()
-        defer { unlock() }
-        return try action()
     }
     
-    @discardableResult
-    func writeLocked<Result>(_ action: () throws -> Result) rethrows -> Result {
-        writeLock()
-        defer { unlock() }
-        return try action()
+    func rd_unlock() {
+        unlock()
     }
+    
+    func wr_lock() {
+        writeLock()
+    }
+    
+    func wr_unlock() {
+        unlock()
+    }
+    
 }

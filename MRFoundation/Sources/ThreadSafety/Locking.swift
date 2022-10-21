@@ -8,12 +8,14 @@
 
 import Foundation
 
-
 protocol Locking {
     
-    @discardableResult
-    func readLocked<Result>(_ action: () throws -> Result) rethrows -> Result
+    func rd_lock()
     
-    @discardableResult
-    func writeLocked<Result>(_ action: () throws -> Result) rethrows -> Result
+    func rd_unlock()
+    
+    func wr_lock()
+    
+    func wr_unlock()
+    
 }

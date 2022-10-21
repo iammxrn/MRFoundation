@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-final class UnfairLock {
+public final class UnfairLock {
     
     
     // MARK: - Private Properties
@@ -19,7 +18,7 @@ final class UnfairLock {
     
     // MARK: - Init
     
-    init() {
+    public required init() {
         self.unfairLock = UnsafeMutablePointer<os_unfair_lock>.allocate(capacity: 1)
         self.unfairLock.initialize(to: .init())
     }
@@ -32,15 +31,11 @@ final class UnfairLock {
     
     // MARK: - Public Methods
     
-    func `try`() -> Bool {
-        os_unfair_lock_trylock(unfairLock)
-    }
-    
-    func lock() {
+    public final func lock() {
         os_unfair_lock_lock(unfairLock)
     }
     
-    func unlock() {
+    public final func unlock() {
         os_unfair_lock_unlock(unfairLock)
     }
 }
@@ -50,17 +45,19 @@ final class UnfairLock {
 
 extension UnfairLock: Locking {
     
-    @discardableResult
-    func readLocked<Result>(_ action: () throws -> Result) rethrows -> Result {
+    func rd_lock() {
         lock()
-        defer { unlock() }
-        return try action()
     }
     
-    @discardableResult
-    func writeLocked<Result>(_ action: () throws -> Result) rethrows -> Result {
+    func rd_unlock() {
+        unlock()
+    }
+    
+    func wr_lock() {
         lock()
-        defer { unlock() }
-        return try action()
+    }
+    
+    func wr_unlock() {
+        unlock()
     }
 }
