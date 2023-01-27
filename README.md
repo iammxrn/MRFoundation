@@ -1,7 +1,6 @@
 # MRFoundation
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/MRFoundation.svg)](https://img.shields.io/cocoapods/v/MRFoundation.svg)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![SPM Compatible](https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat)](https://www.swift.org/package-manager/)
 [![Platform](https://img.shields.io/cocoapods/p/MRFoundation.svg?style=flat)](http://cocoadocs.org/docsets/MRFoundation)
 
@@ -28,14 +27,6 @@ MRFoundation is a library to complement the Swift Standard Library.
 
 ```ruby
 pod 'MRFoundation'
-```
-
-### Carthage
-
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks. To integrate MRFoundation into your Xcode project using Carthage, specify it in your `Cartfile`:
-
-```ogdl
-github "djmixroman/MRFoundation" ~> 1.0
 ```
 
 ### Swift Package Manager
