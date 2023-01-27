@@ -18,7 +18,13 @@ let package = Package(
         .target(
             name: "MRFoundation",
             dependencies: [],
-            path: "MRFoundation/Sources"),
+            path: "MRFoundation/Sources"
+        ),
+        .testTarget(
+            name: "MRFoundationTests",
+            dependencies: ["MRFoundation"],
+            path: "MRFoundationTests"
+        )
     ],
     swiftLanguageVersions: [.v5]
 )

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F0B4DFD29840AE800807C43 /* MRFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B4DFC29840AE800807C43 /* MRFoundationTests.swift */; };
+		8F0B4DFE29840AE800807C43 /* MRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD77C7227B4336000A7AE45 /* MRFoundation.framework */; };
+		8F0B4E09298410C100807C43 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B4E08298410C100807C43 /* Queue.swift */; };
+		8F0B4E0D29843E5600807C43 /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B4E0C29843E5600807C43 /* QueueTests.swift */; };
 		8F2F934427B4378200AF9BB8 /* UnfairAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C9827B435E500A7AE45 /* UnfairAtomic.swift */; };
 		8F2F934527B4378200AF9BB8 /* UnfairLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C9927B435E500A7AE45 /* UnfairLock.swift */; };
 		8F2F934627B4378200AF9BB8 /* ReadWriteAtomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C9427B435E500A7AE45 /* ReadWriteAtomic.swift */; };
@@ -15,7 +19,6 @@
 		8F2F934927B4378200AF9BB8 /* Locking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C9A27B435E500A7AE45 /* Locking.swift */; };
 		8F3AD22B288AD56F00E0CA61 /* CFRunLoop+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3AD22A288AD56F00E0CA61 /* CFRunLoop+Helper.swift */; };
 		8F3AD232288AECDA00E0CA61 /* MRDispatchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3AD231288AECDA00E0CA61 /* MRDispatchTimer.swift */; };
-		8F3E753C27C7CBAF007D1CD2 /* MRTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E753A27C7CBAF007D1CD2 /* MRTimeFormatter.swift */; };
 		8F3E753D27C7CBAF007D1CD2 /* MRUserDefaultsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E753B27C7CBAF007D1CD2 /* MRUserDefaultsProvider.swift */; };
 		8F3E754327C7CBB9007D1CD2 /* MRKeychainProviderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E753F27C7CBB9007D1CD2 /* MRKeychainProviderError.swift */; };
 		8F3E754427C7CBB9007D1CD2 /* MRKeychainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E754027C7CBB9007D1CD2 /* MRKeychainProvider.swift */; };
@@ -33,10 +36,23 @@
 		8FD77C8F27B4356000A7AE45 /* FloatingPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD77C8E27B4356000A7AE45 /* FloatingPoint+Extension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8F0B4DFF29840AE800807C43 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8FD77C6927B4336000A7AE45 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8FD77C7127B4336000A7AE45;
+			remoteInfo = MRFoundation;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		8F0B4DFA29840AE800807C43 /* MRFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MRFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0B4DFC29840AE800807C43 /* MRFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRFoundationTests.swift; sourceTree = "<group>"; };
+		8F0B4E08298410C100807C43 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		8F0B4E0C29843E5600807C43 /* QueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
 		8F3AD22A288AD56F00E0CA61 /* CFRunLoop+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CFRunLoop+Helper.swift"; sourceTree = "<group>"; };
 		8F3AD231288AECDA00E0CA61 /* MRDispatchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRDispatchTimer.swift; sourceTree = "<group>"; };
-		8F3E753A27C7CBAF007D1CD2 /* MRTimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRTimeFormatter.swift; sourceTree = "<group>"; };
 		8F3E753B27C7CBAF007D1CD2 /* MRUserDefaultsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRUserDefaultsProvider.swift; sourceTree = "<group>"; };
 		8F3E753F27C7CBB9007D1CD2 /* MRKeychainProviderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRKeychainProviderError.swift; sourceTree = "<group>"; };
 		8F3E754027C7CBB9007D1CD2 /* MRKeychainProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MRKeychainProvider.swift; sourceTree = "<group>"; };
@@ -62,6 +78,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8F0B4DF729840AE800807C43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F0B4DFE29840AE800807C43 /* MRFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FD77C6F27B4336000A7AE45 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +96,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F0B4DF2298409E900807C43 /* DataStructure */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B4E0A298410C400807C43 /* Queue */,
+			);
+			path = DataStructure;
+			sourceTree = "<group>";
+		};
+		8F0B4DFB29840AE800807C43 /* MRFoundationTests */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B4E0429840B0600807C43 /* DataStructure */,
+				8F0B4DFC29840AE800807C43 /* MRFoundationTests.swift */,
+			);
+			path = MRFoundationTests;
+			sourceTree = "<group>";
+		};
+		8F0B4E0429840B0600807C43 /* DataStructure */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B4E0B29843E4500807C43 /* Queue */,
+			);
+			path = DataStructure;
+			sourceTree = "<group>";
+		};
+		8F0B4E0A298410C400807C43 /* Queue */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B4E08298410C100807C43 /* Queue.swift */,
+			);
+			path = Queue;
+			sourceTree = "<group>";
+		};
+		8F0B4E0B29843E4500807C43 /* Queue */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B4E0C29843E5600807C43 /* QueueTests.swift */,
+			);
+			path = Queue;
+			sourceTree = "<group>";
+		};
 		8F3AD230288AEC3A00E0CA61 /* UserDefaultsProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				8FD77C7427B4336000A7AE45 /* MRFoundation */,
+				8F0B4DFB29840AE800807C43 /* MRFoundationTests */,
 				8FD77C7327B4336000A7AE45 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				8FD77C7227B4336000A7AE45 /* MRFoundation.framework */,
+				8F0B4DFA29840AE800807C43 /* MRFoundationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +186,7 @@
 		8FD77C7C27B4337E00A7AE45 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8F0B4DF2298409E900807C43 /* DataStructure */,
 				8F3AD230288AEC3A00E0CA61 /* UserDefaultsProvider */,
 				8F3E753E27C7CBB9007D1CD2 /* KeychainProvider */,
 				8FD77C9B27B4365A00A7AE45 /* Common */,
@@ -172,7 +240,6 @@
 		8FD77C9B27B4365A00A7AE45 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8F3E753A27C7CBAF007D1CD2 /* MRTimeFormatter.swift */,
 				8F3AD231288AECDA00E0CA61 /* MRDispatchTimer.swift */,
 				8F8978C627C91458002DCB04 /* MREnumCodable.swift */,
 				8FD77C8327B4349D00A7AE45 /* GCD+Helper.swift */,
@@ -197,6 +264,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		8F0B4DF929840AE800807C43 /* MRFoundationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F0B4E0129840AE800807C43 /* Build configuration list for PBXNativeTarget "MRFoundationTests" */;
+			buildPhases = (
+				8F0B4DF629840AE800807C43 /* Sources */,
+				8F0B4DF729840AE800807C43 /* Frameworks */,
+				8F0B4DF829840AE800807C43 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F0B4E0029840AE800807C43 /* PBXTargetDependency */,
+			);
+			name = MRFoundationTests;
+			productName = MRFoundationTests;
+			productReference = 8F0B4DFA29840AE800807C43 /* MRFoundationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8FD77C7127B4336000A7AE45 /* MRFoundation */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8FD77C7927B4336000A7AE45 /* Build configuration list for PBXNativeTarget "MRFoundation" */;
@@ -223,9 +308,13 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				CLASSPREFIX = MR;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = "Roman Mogutnov";
 				TargetAttributes = {
+					8F0B4DF929840AE800807C43 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					8FD77C7127B4336000A7AE45 = {
 						CreatedOnToolsVersion = 13.2.1;
 						LastSwiftMigration = 1320;
@@ -246,11 +335,19 @@
 			projectRoot = "";
 			targets = (
 				8FD77C7127B4336000A7AE45 /* MRFoundation */,
+				8F0B4DF929840AE800807C43 /* MRFoundationTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8F0B4DF829840AE800807C43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FD77C7027B4336000A7AE45 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,6 +358,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8F0B4DF629840AE800807C43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F0B4DFD29840AE800807C43 /* MRFoundationTests.swift in Sources */,
+				8F0B4E0D29843E5600807C43 /* QueueTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FD77C6E27B4336000A7AE45 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -272,13 +378,13 @@
 				8F2F934527B4378200AF9BB8 /* UnfairLock.swift in Sources */,
 				8FD77C8B27B4353500A7AE45 /* Comparable+Extension.swift in Sources */,
 				8F8978C727C91458002DCB04 /* MREnumCodable.swift in Sources */,
-				8F3E753C27C7CBAF007D1CD2 /* MRTimeFormatter.swift in Sources */,
 				8FD77C8427B4349D00A7AE45 /* GCD+Helper.swift in Sources */,
 				8F3E754427C7CBB9007D1CD2 /* MRKeychainProvider.swift in Sources */,
 				8F3E754627C7CBB9007D1CD2 /* MRGenericKeychainPasswordQueryable.swift in Sources */,
 				8F2F934827B4378200AF9BB8 /* Atomic.swift in Sources */,
 				8FD77C8927B4350500A7AE45 /* Collection+Extension.swift in Sources */,
 				8F3E753D27C7CBAF007D1CD2 /* MRUserDefaultsProvider.swift in Sources */,
+				8F0B4E09298410C100807C43 /* Queue.swift in Sources */,
 				8F2F934727B4378200AF9BB8 /* ReadWriteLock.swift in Sources */,
 				8FD77C8027B4342500A7AE45 /* MRLog.swift in Sources */,
 				8F3E754527C7CBB9007D1CD2 /* MRKeychainQueryable.swift in Sources */,
@@ -293,7 +399,57 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8F0B4E0029840AE800807C43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8FD77C7127B4336000A7AE45 /* MRFoundation */;
+			targetProxy = 8F0B4DFF29840AE800807C43 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8F0B4E0229840AE800807C43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SXJG6N9TNG;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mxrn.MRFoundationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8F0B4E0329840AE800807C43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SXJG6N9TNG;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mxrn.MRFoundationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		8FD77C7727B4336000A7AE45 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -436,10 +592,14 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mxrn.MRFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -467,10 +627,14 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mxrn.MRFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -480,6 +644,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8F0B4E0129840AE800807C43 /* Build configuration list for PBXNativeTarget "MRFoundationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F0B4E0229840AE800807C43 /* Debug */,
+				8F0B4E0329840AE800807C43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8FD77C6C27B4336000A7AE45 /* Build configuration list for PBXProject "MRFoundation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

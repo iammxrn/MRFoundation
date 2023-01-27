@@ -29,8 +29,15 @@ extension String {
 // MARK: - Hash
 
 extension String {
-    
-    public var permanentHash: UInt64 {
+
+    /// DJB Hash function
+    ///
+    /// - Warning: Keep in mind that DJB hash function is not designed to be collision-resistant,
+    /// it's not considered to be a secure hash function and should not be used for cryptographic purposes.
+    /// If collision resistance is important for your use case, then you should use a cryptographic hash function like SHA-256.
+    ///
+    /// - Returns: A UInt64 value representing the hash of the string.
+    public var permanentDJBHash: UInt64 {
         var result: UInt64 = .djbPrimeNumber
         let buf = [UInt8](self.utf8)
         for b in buf {
@@ -53,4 +60,5 @@ extension UInt64 {
 extension String {
     
     static var defaultDomain: String { "com.mxrn.MRFoundation" }
+
 }

@@ -8,26 +8,30 @@
 
 import Foundation
 
+/// The MRDispatchTimer class provides a simple way to execute a block of code at set intervals.
+///
+/// - Parameters:
+///   - timeInterval: The time interval at which the eventHandler block should be executed.
 public final class MRDispatchTimer {
 
-    
     // MARK: - Private Enums
-    
+
     private enum State {
         case suspended
         case resumed
     }
-    
-    
+
     // MARK: - Public Properties
-    
+
+    /// The time interval at which the eventHandler block should be executed.
     public let timeInterval: TimeInterval
-    
+
+    /// The block of code to be executed at set intervals.
     public var eventHandler: ((_ timer: MRDispatchTimer) -> Void)?
-    
-    
+
+
     // MARK: - Private Properties
-    
+
     private lazy var timer: DispatchSourceTimer = {
         let timer = DispatchSource.makeTimerSource()
         timer.schedule(deadline: .now() + self.timeInterval, repeating: self.timeInterval)
@@ -39,14 +43,13 @@ public final class MRDispatchTimer {
     }()
 
     private var state: State = .suspended
-    
-    
+
     // MARK: - Init
-    
+
     public init(timeInterval: TimeInterval) {
         self.timeInterval = timeInterval
     }
-    
+
     deinit {
         timer.setEventHandler {}
         timer.cancel()
@@ -57,22 +60,22 @@ public final class MRDispatchTimer {
         resume()
         eventHandler = nil
     }
-    
-    
+
     // MARK: - Public Methods
-    
+
+    /// Resumes the timer.
     public func resume() {
         guard state != .resumed else { return }
-        
+
         state = .resumed
         timer.resume()
     }
 
+    /// Suspends the timer.
     public func suspend() {
         guard state != .suspended else { return }
-       
+
         state = .suspended
         timer.suspend()
     }
-    
 }
