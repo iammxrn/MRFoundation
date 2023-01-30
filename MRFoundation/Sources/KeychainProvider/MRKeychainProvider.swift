@@ -40,12 +40,23 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
         try setValue(encodedValue, for: key)
     }
     
-    public func setValue(_ value: Codable, for key: Key) throws {
+    public func setValue<T: Codable>(_ value: T, for key: Key) throws {
         guard let encodedValue = try? JSONEncoder().encode(value) else {
             throw MRKeychainProviderError(
-                code: .data2CodableConversion,
+                code: .codable2DataConversion,
                 localizedDescription: "Invalid value: \(value)",
                 systemMessage: "Cannot convert value: \(value) to binary data"
+            )
+        }
+        try setValue(encodedValue, for: key)
+    }
+    
+    public func setValues<T: Codable>(_ values: [T], for key: Key) throws {
+        guard let encodedValue = try? JSONEncoder().encode(values) else {
+            throw MRKeychainProviderError(
+                code: .codable2DataConversion,
+                localizedDescription: "Invalid values: \(values)",
+                systemMessage: "Cannot convert value: \(values) to binary data"
             )
         }
         try setValue(encodedValue, for: key)
@@ -101,6 +112,21 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
         do {
             return try encodedValue.map {
                 try JSONDecoder().decode(T.self, from: $0)
+            }
+        } catch {
+            throw MRKeychainProviderError(
+                code: .data2CodableConversion,
+                localizedDescription: "Data corrupted",
+                systemMessage: "Cannot convert binary data to codable"
+            )
+        }
+    }
+    
+    public func getValues<T: Codable>(for key: Key) throws -> [T]? {
+        let encodedValue: Data? = try getValue(for: key)
+        do {
+            return try encodedValue.map {
+                try JSONDecoder().decode([T].self, from: $0)
             }
         } catch {
             throw MRKeychainProviderError(
