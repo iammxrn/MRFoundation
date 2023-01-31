@@ -90,11 +90,11 @@ open class MRUserDefaultsProvider<Key: MRUserDefaultsProviderKey> {
         return object as? T
     }
     
-    /// Fetches values for a given key.
+    /// Fetches value for a given key.
     ///
     /// - Parameters:
-    ///   - key: The key associated with the values to fetch.
-    /// - Returns: The fetched values, or empty if no data is associated with the key.
+    ///   - key: The key associated with the value to fetch.
+    /// - Returns: The fetched value, or nil if no data is associated with the key.
     public func fetchValue<T: Codable>(for key: Key) throws -> T? {
         let object: Data? = fetchData(for: key)
         return try object.map {
