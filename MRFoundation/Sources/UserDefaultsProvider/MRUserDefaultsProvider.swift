@@ -49,7 +49,27 @@ open class MRUserDefaultsProvider<Key: MRUserDefaultsProviderKey> {
         userDefaults.set(data, forKey: key.rawValue)
         userDefaults.synchronize()
     }
-
+    
+    /// Persists codable value for a given key.
+    ///
+    /// - Parameters:
+    ///   - value: The value to persist.
+    ///   - key: The key to associate the value with.
+    public func persistValue<T: Codable>(_ value: T, for key: Key) throws {
+        let encodedData = try JSONEncoder().encode(value)
+        persist(encodedData, for: key)
+    }
+    
+    /// Persists codable values for a given key.
+    ///
+    /// - Parameters:
+    ///   - values: The values to persist.
+    ///   - key: The key to associate the values with.
+    public func persistValues<T: Codable>(_ values: [T], for key: Key) throws {
+        let encodedData = try JSONEncoder().encode(values)
+        persist(encodedData, for: key)
+    }
+    
     /// Erases data for a given key.
     ///
     /// - Parameters:
@@ -68,5 +88,29 @@ open class MRUserDefaultsProvider<Key: MRUserDefaultsProviderKey> {
         guard let object = userDefaults.object(forKey: key.rawValue) else { return nil }
 
         return object as? T
+    }
+    
+    /// Fetches values for a given key.
+    ///
+    /// - Parameters:
+    ///   - key: The key associated with the values to fetch.
+    /// - Returns: The fetched values, or empty if no data is associated with the key.
+    public func fetchValue<T: Codable>(for key: Key) throws -> T? {
+        let object: Data? = fetchData(for: key)
+        return try object.map {
+            try JSONDecoder().decode(T.self, from: $0)
+        }
+    }
+    
+    /// Fetches values for a given key.
+    ///
+    /// - Parameters:
+    ///   - key: The key associated with the values to fetch.
+    /// - Returns: The fetched values, or empty if no data is associated with the key.
+    public func fetchValues<T: Codable>(for key: Key) throws -> [T] {
+        let object: Data? = fetchData(for: key)
+        return try object.map {
+            try JSONDecoder().decode([T].self, from: $0)
+        } ?? []
     }
 }
