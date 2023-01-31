@@ -122,12 +122,12 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
         }
     }
     
-    public func getValues<T: Codable>(for key: Key) throws -> [T]? {
+    public func getValues<T: Codable>(for key: Key) throws -> [T] {
         let encodedValue: Data? = try getValue(for: key)
         do {
             return try encodedValue.map {
                 try JSONDecoder().decode([T].self, from: $0)
-            }
+            } ?? []
         } catch {
             throw MRKeychainProviderError(
                 code: .data2CodableConversion,
