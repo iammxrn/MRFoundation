@@ -45,7 +45,7 @@ open class MRUserDefaultsProvider<Key: MRUserDefaultsProviderKey> {
     /// - Parameters:
     ///   - data: The data to persist.
     ///   - key: The key to associate the data with.
-    public func persist(_ data: Any, for key: Key) {
+    public func persist(_ data: Any?, for key: Key) {
         userDefaults.set(data, forKey: key.rawValue)
         userDefaults.synchronize()
     }
