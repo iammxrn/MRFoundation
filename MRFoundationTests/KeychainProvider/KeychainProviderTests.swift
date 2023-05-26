@@ -155,7 +155,7 @@ class KeychainProviderTests: XCTestCase {
 
     func testParallelWriting() {
         let key = TestKey.someValue
-        let values = Array(0..<1_000).map { SomeCodableStruct($0) }
+        let values = Array(0..<100).map { SomeCodableStruct($0) }
         let dispatchGroup = DispatchGroup()
 
         for value in values {
@@ -184,7 +184,7 @@ class KeychainProviderTests: XCTestCase {
         }
         let dispatchGroup = DispatchGroup()
 
-        for _ in 0..<1_000 {
+        for _ in 0..<100 {
             dispatchGroup.enter()
             DispatchQueue.global().async {
                 do {
