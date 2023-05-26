@@ -18,6 +18,7 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
     // MARK: - Private Properties
     
     private let keychainQueryable: MRKeychainQueryable
+    private let accessQueue = DispatchQueue(label: "com.mrfoundation.keychainAccess", attributes: .concurrent)
     
     
     // MARK: - Init
@@ -29,65 +30,72 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
     
     // MARK: - Public Methods
     
-    public func setValue(_ value: String, for key: Key) throws {
+    public func setValue(_ value: String, for key: Key, completion: ((Error?) -> Void)? = nil) {
         guard let encodedValue = value.data(using: .utf8) else {
-            throw MRKeychainProviderError(
+            completion?(MRKeychainProviderError(
                 code: .string2DataConversion,
                 localizedDescription: "Invalid value: \(value)",
                 systemMessage: "Cannot convert value: \(value) to binary data"
-            )
+            ))
+            return
         }
-        try setValue(encodedValue, for: key)
+        setValue(encodedValue, for: key, completion: completion)
     }
     
-    public func setValue<T: Codable>(_ value: T, for key: Key) throws {
+    public func setValue<T: Codable>(_ value: T, for key: Key, completion: ((Error?) -> Void)? = nil) {
         guard let encodedValue = try? JSONEncoder().encode(value) else {
-            throw MRKeychainProviderError(
+            completion?(MRKeychainProviderError(
                 code: .codable2DataConversion,
                 localizedDescription: "Invalid value: \(value)",
                 systemMessage: "Cannot convert value: \(value) to binary data"
-            )
+            ))
+            return
         }
-        try setValue(encodedValue, for: key)
+        setValue(encodedValue, for: key, completion: completion)
     }
     
-    public func setValues<T: Codable>(_ values: [T], for key: Key) throws {
+    public func setValues<T: Codable>(_ values: [T], for key: Key, completion: ((Error?) -> Void)? = nil) {
         guard let encodedValue = try? JSONEncoder().encode(values) else {
-            throw MRKeychainProviderError(
+            completion?(MRKeychainProviderError(
                 code: .codable2DataConversion,
                 localizedDescription: "Invalid values: \(values)",
                 systemMessage: "Cannot convert value: \(values) to binary data"
-            )
+            ))
+            return
         }
-        try setValue(encodedValue, for: key)
+        setValue(encodedValue, for: key, completion: completion)
     }
     
-    public func setValue(_ value: Data, for key: Key) throws {
-        var query = keychainQueryable.query
-        query[String(kSecAttrAccount)] = key.rawValue
-        
-        var status = SecItemCopyMatching(query as CFDictionary, nil)
-        switch status {
-        case errSecSuccess:
-            var attributesToUpdate: [String: Any] = [:]
-            attributesToUpdate[String(kSecValueData)] = value
-            
-            status = SecItemUpdate(query as CFDictionary,
-                                   attributesToUpdate as CFDictionary)
-            if status != errSecSuccess {
-                throw error(from: status)
+    public func setValue(_ value: Data, for key: Key, completion: ((Error?) -> Void)? = nil) {
+        accessQueue.async(flags: .barrier) {
+            var query = self.keychainQueryable.query
+            query[String(kSecAttrAccount)] = key.rawValue
+
+            var status = SecItemCopyMatching(query as CFDictionary, nil)
+            switch status {
+            case errSecSuccess:
+                var attributesToUpdate: [String: Any] = [:]
+                attributesToUpdate[String(kSecValueData)] = value
+
+                status = SecItemUpdate(query as CFDictionary,
+                                       attributesToUpdate as CFDictionary)
+                if status != errSecSuccess {
+                    completion?(self.error(from: status))
+                }
+
+            case errSecItemNotFound:
+                query[String(kSecValueData)] = value
+
+                status = SecItemAdd(query as CFDictionary, nil)
+                if status != errSecSuccess {
+                    completion?(self.error(from: status))
+                }
+
+            default:
+                completion?(self.error(from: status))
             }
-            
-        case errSecItemNotFound:
-            query[String(kSecValueData)] = value
-            
-            status = SecItemAdd(query as CFDictionary, nil)
-            if status != errSecSuccess {
-                throw error(from: status)
-            }
-            
-        default:
-            throw error(from: status)
+
+            completion?(nil)
         }
     }
     
@@ -138,55 +146,63 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
     }
     
     public func getValue(for key: Key) throws -> Data? {
-        var query = keychainQueryable.query
-        query[String(kSecMatchLimit)] = kSecMatchLimitOne
-        query[String(kSecReturnAttributes)] = kCFBooleanTrue
-        query[String(kSecReturnData)] = kCFBooleanTrue
-        query[String(kSecAttrAccount)] = key.rawValue
-        
-        var queryResult: AnyObject?
-        let status = withUnsafeMutablePointer(to: &queryResult) {
-            SecItemCopyMatching(query as CFDictionary, $0)
-        }
-        
-        switch status {
-        case errSecSuccess:
-            guard
-                let queriedItem = queryResult as? [String: Any],
-                let passwordData = queriedItem[String(kSecValueData)] as? Data
-            else {
-                throw MRKeychainProviderError(
-                    code: .dataRetrieving,
-                    localizedDescription: "Data corrupted",
-                    systemMessage: "Cannot retreive binary data"
-                )
+        try accessQueue.sync {
+            var query = keychainQueryable.query
+            query[String(kSecMatchLimit)] = kSecMatchLimitOne
+            query[String(kSecReturnAttributes)] = kCFBooleanTrue
+            query[String(kSecReturnData)] = kCFBooleanTrue
+            query[String(kSecAttrAccount)] = key.rawValue
+
+            var queryResult: AnyObject?
+            let status = SecItemCopyMatching(query as CFDictionary, &queryResult)
+
+            switch status {
+            case errSecSuccess:
+                guard
+                    let queriedItem = queryResult as? [String: Any],
+                    let passwordData = queriedItem[String(kSecValueData)] as? Data
+                else {
+                    throw MRKeychainProviderError(
+                        code: .dataRetrieving,
+                        localizedDescription: "Data corrupted",
+                        systemMessage: "Cannot retreive binary data"
+                    )
+                }
+                return passwordData
+
+            case errSecItemNotFound:
+                return nil
+
+            default:
+                throw error(from: status)
             }
-            return passwordData
-            
-        case errSecItemNotFound:
-            return nil
-            
-        default:
-            throw error(from: status)
         }
     }
     
-    public func removeValue(for key: Key) throws {
-        var query = keychainQueryable.query
-        query[String(kSecAttrAccount)] = key.rawValue
-        
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw error(from: status)
+    public func removeValue(for key: Key, completion: ((Error?) -> Void)? = nil) {
+        accessQueue.async(flags: .barrier) {
+            var query = self.keychainQueryable.query
+            query[String(kSecAttrAccount)] = key.rawValue
+
+            let status = SecItemDelete(query as CFDictionary)
+            guard status == errSecSuccess || status == errSecItemNotFound else {
+                completion?(self.error(from: status))
+                return
+            }
+            completion?(nil)
         }
     }
     
-    public func removeAllValues() throws {
-        let query = keychainQueryable.query
-        
-        let status = SecItemDelete(query as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw error(from: status)
+    public func removeAllValues(completion: ((Error?) -> Void)? = nil) {
+        accessQueue.async(flags: .barrier) {
+            let query = self.keychainQueryable.query
+
+            let status = SecItemDelete(query as CFDictionary)
+            guard status == errSecSuccess || status == errSecItemNotFound else {
+                completion?(self.error(from: status))
+                return
+            }
+            completion?(nil)
         }
     }
     
