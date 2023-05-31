@@ -51,16 +51,6 @@ open class FXUserDefaultsProvider<Key: FXUserDefaultsProviderKey> {
         self.persist(encodedData, for: key)
     }
 
-    /// Persists codable values for a given key.
-    ///
-    /// - Parameters:
-    ///   - values: The values to persist.
-    ///   - key: The key to associate the values with.
-    public func persistValues(_ values: [some Codable], for key: Key) throws {
-        let encodedData = try JSONEncoder().encode(values)
-        self.persist(encodedData, for: key)
-    }
-
     /// Erases data for a given key.
     ///
     /// - Parameters:
@@ -91,18 +81,6 @@ open class FXUserDefaultsProvider<Key: FXUserDefaultsProviderKey> {
         return try object.map {
             try JSONDecoder().decode(T.self, from: $0)
         }
-    }
-
-    /// Fetches values for a given key.
-    ///
-    /// - Parameters:
-    ///   - key: The key associated with the values to fetch.
-    /// - Returns: The fetched values, or empty if no data is associated with the key.
-    public func fetchValues<T: Codable>(for key: Key) throws -> [T] {
-        let object: Data? = self.fetchData(for: key)
-        return try object.map {
-            try JSONDecoder().decode([T].self, from: $0)
-        } ?? []
     }
 
     // MARK: Private
