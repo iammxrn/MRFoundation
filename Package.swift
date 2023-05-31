@@ -11,7 +11,8 @@ let package = Package(
     products: [
         .library(
             name: "MRFoundation",
-            targets: ["MRFoundation"]),
+            targets: ["MRFoundation"]
+        ),
     ],
     dependencies: [],
     targets: [
@@ -24,7 +25,7 @@ let package = Package(
             name: "MRFoundationTests",
             dependencies: ["MRFoundation"],
             path: "MRFoundationTests"
-        )
+        ),
     ],
     swiftLanguageVersions: [.v5]
 )

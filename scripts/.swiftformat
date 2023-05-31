@@ -1,0 +1,12 @@
+--header strip
+--self insert
+--importgrouping testable-bottom
+--stripunusedargs closure-only
+--wraparguments before-first
+--wrapcollections before-first
+--ifdef no-indent
+--enable wrapSwitchCases
+--enable organizeDeclarations
+--enable redundantOptionalBinding
+--exclude ../**/*.swiftgen.swift
+--swiftversion 5.7
