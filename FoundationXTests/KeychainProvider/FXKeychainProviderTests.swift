@@ -1,7 +1,7 @@
 import FoundationX
 import XCTest
 
-class KeychainProviderTests: XCTestCase {
+class FXKeychainProviderTests: XCTestCase {
     struct SomeCodableStruct: Codable, Equatable {
         // MARK: Lifecycle
 
