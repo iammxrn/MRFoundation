@@ -18,7 +18,7 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
     // MARK: - Private Properties
     
     private let keychainQueryable: MRKeychainQueryable
-    private let accessQueue = DispatchQueue(label: "com.mrfoundation.keychainAccess", attributes: .concurrent)
+    private let accessQueue = DispatchQueue(label: "com.mrfoundation.keychainAccess")
     
     
     // MARK: - Init
@@ -67,7 +67,7 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
     }
     
     public func setValue(_ value: Data, for key: Key, completion: ((Error?) -> Void)? = nil) {
-        accessQueue.async(flags: .barrier) {
+        accessQueue.async {
             var query = self.keychainQueryable.query
             query[String(kSecAttrAccount)] = key.rawValue
 
@@ -180,7 +180,7 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
     }
     
     public func removeValue(for key: Key, completion: ((Error?) -> Void)? = nil) {
-        accessQueue.async(flags: .barrier) {
+        accessQueue.async {
             var query = self.keychainQueryable.query
             query[String(kSecAttrAccount)] = key.rawValue
 
@@ -194,7 +194,7 @@ open class MRKeychainProvider<Key: MRKeychainProviderKey> {
     }
     
     public func removeAllValues(completion: ((Error?) -> Void)? = nil) {
-        accessQueue.async(flags: .barrier) {
+        accessQueue.async {
             let query = self.keychainQueryable.query
 
             let status = SecItemDelete(query as CFDictionary)
