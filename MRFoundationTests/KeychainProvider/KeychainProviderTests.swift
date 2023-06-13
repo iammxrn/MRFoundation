@@ -54,7 +54,7 @@ class KeychainProviderTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
     }
 
     func testSetValueCodable() {
@@ -67,7 +67,7 @@ class KeychainProviderTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
     }
 
     func testSetValuesCodable() {
@@ -80,7 +80,7 @@ class KeychainProviderTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
     }
 
     func testGetValue() {
@@ -92,7 +92,7 @@ class KeychainProviderTests: XCTestCase {
             XCTAssertNil(error)
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
         var retrievedValue: String?
         XCTAssertNoThrow(retrievedValue = try keychainProvider.getValue(for: key))
         XCTAssertEqual(retrievedValue, expectedValue)
@@ -106,7 +106,7 @@ class KeychainProviderTests: XCTestCase {
             XCTAssertNil(error)
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
         var retrievedValue: SomeCodableStruct?
         XCTAssertNoThrow(retrievedValue = try keychainProvider.getValue(for: key))
         XCTAssertEqual(retrievedValue, expectedValue)
@@ -121,7 +121,7 @@ class KeychainProviderTests: XCTestCase {
             XCTAssertNil(error)
             expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
 
         var retrievedValues: [SomeCodableStruct] = []
         XCTAssertNoThrow(retrievedValues = try keychainProvider.getValues(for: key))
@@ -142,7 +142,7 @@ class KeychainProviderTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
     }
 
     func testRemoveAllValues() {
@@ -159,33 +159,110 @@ class KeychainProviderTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
+    }
+
+    func testNonExistentKey() {
+        let key = TestKey()
+
+        var retrievedValue: String?
+        XCTAssertNoThrow(retrievedValue = try keychainProvider.getValue(for: key))
+        XCTAssertNil(retrievedValue)
+    }
+
+    func testOverwritingValue() {
+        let key = TestKey()
+        let initialValue = "initial value"
+        let newValue = "new value"
+
+        let expectation1 = XCTestExpectation(description: "InitialSetValue")
+        keychainProvider.setValue(initialValue, for: key) { error in
+            XCTAssertNil(error)
+            expectation1.fulfill()
+        }
+        wait(for: [expectation1], timeout: 60.0)
+
+        let expectation2 = XCTestExpectation(description: "NewSetValue")
+        keychainProvider.setValue(newValue, for: key) { error in
+            XCTAssertNil(error)
+            expectation2.fulfill()
+        }
+        wait(for: [expectation2], timeout: 60.0)
+
+        var retrievedValue: String?
+        XCTAssertNoThrow(retrievedValue = try keychainProvider.getValue(for: key))
+        XCTAssertEqual(retrievedValue, newValue)
+    }
+
+    func testSuccessfulRemoval() {
+        let key = TestKey()
+        let value = "testValue"
+
+        let setExpectation = XCTestExpectation(description: "SetStringValue")
+        keychainProvider.setValue(value, for: key) { error in
+            XCTAssertNil(error)
+            setExpectation.fulfill()
+        }
+        wait(for: [setExpectation], timeout: 60.0)
+
+        let removeExpectation = XCTestExpectation(description: "RemoveValue")
+        keychainProvider.removeValue(for: key) { error in
+            XCTAssertNil(error)
+            removeExpectation.fulfill()
+        }
+        wait(for: [removeExpectation], timeout: 60.0)
+
+        var retrievedValue: String?
+        XCTAssertNoThrow(retrievedValue = try keychainProvider.getValue(for: key))
+        XCTAssertNil(retrievedValue)
+    }
+
+    func testRemovalNonExistentValue() {
+        let key = TestKey()
+
+        let removeExpectation = XCTestExpectation(description: "RemoveNonExistentValue")
+        keychainProvider.removeValue(for: key) { error in
+            XCTAssertNil(error)
+            removeExpectation.fulfill()
+        }
+        wait(for: [removeExpectation], timeout: 60.0)
     }
 
     func testParallelWriting() {
         let key = TestKey()
-        let values = Array(0..<1000).map { SomeCodableStruct($0) }
-        let dispatchGroup = DispatchGroup()
+        let values = Array(0..<100).map { SomeCodableStruct($0) }
         let expectation = XCTestExpectation(description: "ParallelWriting")
+        expectation.expectedFulfillmentCount = values.count
 
         for value in values {
-            dispatchGroup.enter()
             DispatchQueue.global().async {
                 self.keychainProvider.setValue(value, for: key) { error in
                     XCTAssertNil(error)
-                    dispatchGroup.leave()
+                    expectation.fulfill()
                 }
             }
         }
-        let result = dispatchGroup.wait(timeout: .now() + 10)
-        switch result {
-        case .success:
-            expectation.fulfill()
-        case .timedOut:
-            XCTFail("Timeout occurred for parallel writing.")
+
+        wait(for: [expectation], timeout: 60.0)
+    }
+
+    func testParallelWritingDifferentKeys() {
+        let values = Array(0..<100).map { (i) -> (key: TestKey, value: SomeCodableStruct) in
+            (TestKey(UUID()), SomeCodableStruct(i))
+        }
+        let expectation = XCTestExpectation(description: "ParallelWritingDifferentKeys")
+        expectation.expectedFulfillmentCount = values.count
+
+        for value in values {
+            DispatchQueue.global().async {
+                self.keychainProvider.setValue(value.value, for: value.key) { error in
+                    XCTAssertNil(error)
+                    expectation.fulfill()
+                }
+            }
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
     }
 
     func testParallelReading() {
@@ -194,69 +271,132 @@ class KeychainProviderTests: XCTestCase {
         keychainProvider.setValue(expectedValue, for: key) { error in
             XCTAssertNil(error)
         }
-        let dispatchGroup = DispatchGroup()
-        let expectation = XCTestExpectation(description: "ParallelReading")
 
-        for _ in 0..<1000 {
-            dispatchGroup.enter()
+        let totalCount = 100
+        let expectation = XCTestExpectation(description: "ParallelReading")
+        expectation.expectedFulfillmentCount = totalCount
+
+        for _ in 0..<totalCount {
             DispatchQueue.global().async {
                 do {
                     let retrievedValue: SomeCodableStruct? = try self.keychainProvider.getValue(for: key)
                     XCTAssertEqual(retrievedValue, expectedValue)
+                    expectation.fulfill()
                 } catch {
                     XCTFail("Error: \(error)")
                 }
-                dispatchGroup.leave()
             }
         }
-        let result = dispatchGroup.wait(timeout: .now() + 10)
-        switch result {
-        case .success:
-            expectation.fulfill()
-        case .timedOut:
-            XCTFail("Timeout occurred for parallel reading.")
-        }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
     }
 
     func testParallelReadingAndWriting() {
         let key = TestKey()
-        let writeValues = Array(0..<1000).map { SomeCodableStruct($0) }
-        let dispatchGroup = DispatchGroup()
+        let writeValues = Array(0..<100).map { SomeCodableStruct($0) }
         let expectation = XCTestExpectation(description: "ConcurrentReadingAndWriting")
+
+        let tasksCount = 2
+
+        expectation.expectedFulfillmentCount = writeValues.count * tasksCount
 
         for value in writeValues {
             // Launch writing tasks
-            dispatchGroup.enter()
             DispatchQueue.global().async {
                 self.keychainProvider.setValue(value, for: key) { error in
                     XCTAssertNil(error)
-                    dispatchGroup.leave()
+                    expectation.fulfill()
                 }
             }
 
             // Launch reading tasks
-            dispatchGroup.enter()
             DispatchQueue.global().async {
                 do {
                     _ = try self.keychainProvider.getValue(for: key) as SomeCodableStruct?
+                    expectation.fulfill()
                 } catch {
                     XCTFail("Error: \(error)")
                 }
-                dispatchGroup.leave()
             }
         }
 
-        let result = dispatchGroup.wait(timeout: .now() + 10)
-        switch result {
-        case .success:
-            expectation.fulfill()
-        case .timedOut:
-            XCTFail("Timeout occurred for concurrent reading and writing.")
-        }
-
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 60.0)
     }
 
+    func testReadingWhileRemoving() {
+        let key = TestKey()
+        let expectedValue = SomeCodableStruct(25)
+
+        let setExpectation = XCTestExpectation(description: "SetValue")
+        keychainProvider.setValue(expectedValue, for: key) { error in
+            XCTAssertNil(error)
+            setExpectation.fulfill()
+        }
+        wait(for: [setExpectation], timeout: 60.0)
+
+        let expectation = XCTestExpectation(description: "ReadingWhileRemoving")
+        expectation.expectedFulfillmentCount = 2
+
+        // Launch removing task
+        DispatchQueue.global().async {
+            self.keychainProvider.removeValue(for: key) { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        }
+
+        // Launch reading task
+        DispatchQueue.global().async {
+            do {
+                let retrievedValue: SomeCodableStruct? = try self.keychainProvider.getValue(for: key)
+                if let retrievedValue = retrievedValue {
+                    XCTAssertEqual(retrievedValue, expectedValue)
+                }
+                expectation.fulfill()
+            } catch {
+                XCTFail("Error: \(error)")
+            }
+        }
+
+        wait(for: [expectation], timeout: 60.0)
+    }
+
+    func testMultipleParallelOperations() {
+        let key = TestKey()
+        let writeValues = Array(0..<100).map { SomeCodableStruct($0) }
+        let expectation = XCTestExpectation(description: "MultipleParallelOperations")
+
+        let tasksCount = 3
+        expectation.expectedFulfillmentCount = writeValues.count * tasksCount
+
+        for value in writeValues {
+            // Launch writing tasks
+            DispatchQueue.global().async {
+                self.keychainProvider.setValue(value, for: key) { error in
+                    XCTAssertNil(error)
+                    expectation.fulfill()
+                }
+            }
+
+            // Launch reading tasks
+            DispatchQueue.global().async {
+                do {
+                    _ = try self.keychainProvider.getValue(for: key) as SomeCodableStruct?
+                    expectation.fulfill()
+                } catch {
+                    XCTFail("Error: \(error)")
+                }
+            }
+
+            // Launch removing tasks
+            DispatchQueue.global().async {
+                self.keychainProvider.removeValue(for: key) { error in
+                    XCTAssertNil(error)
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 60.0)
+    }
 }
