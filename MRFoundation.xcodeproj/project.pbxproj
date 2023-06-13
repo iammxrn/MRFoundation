@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8F0B4DFD29840AE800807C43 /* MRFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B4DFC29840AE800807C43 /* MRFoundationTests.swift */; };
 		8F0B4DFE29840AE800807C43 /* MRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD77C7227B4336000A7AE45 /* MRFoundation.framework */; };
 		8F0B4E09298410C100807C43 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B4E08298410C100807C43 /* Queue.swift */; };
 		8F0B4E0D29843E5600807C43 /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B4E0C29843E5600807C43 /* QueueTests.swift */; };
@@ -55,7 +54,6 @@
 
 /* Begin PBXFileReference section */
 		8F0B4DFA29840AE800807C43 /* MRFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MRFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F0B4DFC29840AE800807C43 /* MRFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRFoundationTests.swift; sourceTree = "<group>"; };
 		8F0B4E08298410C100807C43 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		8F0B4E0C29843E5600807C43 /* QueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
 		8F3AD22A288AD56F00E0CA61 /* CFRunLoop+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CFRunLoop+Helper.swift"; sourceTree = "<group>"; };
@@ -133,7 +131,6 @@
 			children = (
 				8F8C6EC12A211D5F006C2B23 /* KeychainProvider */,
 				8F0B4E0429840B0600807C43 /* DataStructure */,
-				8F0B4DFC29840AE800807C43 /* MRFoundationTests.swift */,
 			);
 			path = MRFoundationTests;
 			sourceTree = "<group>";
@@ -443,7 +440,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F0B4DFD29840AE800807C43 /* MRFoundationTests.swift in Sources */,
 				8F8C6EA72A210626006C2B23 /* KeychainProviderTests.swift in Sources */,
 				8F0B4E0D29843E5600807C43 /* QueueTests.swift in Sources */,
 			);
