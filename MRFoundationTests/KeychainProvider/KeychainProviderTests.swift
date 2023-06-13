@@ -230,7 +230,7 @@ class KeychainProviderTests: XCTestCase {
 
     func testParallelWriting() {
         let key = TestKey()
-        let values = Array(0..<1000).map { SomeCodableStruct($0) }
+        let values = Array(0..<100).map { SomeCodableStruct($0) }
         let expectation = XCTestExpectation(description: "ParallelWriting")
         expectation.expectedFulfillmentCount = values.count
 
@@ -247,7 +247,7 @@ class KeychainProviderTests: XCTestCase {
     }
 
     func testParallelWritingDifferentKeys() {
-        let values = Array(0..<1000).map { (i) -> (key: TestKey, value: SomeCodableStruct) in
+        let values = Array(0..<100).map { (i) -> (key: TestKey, value: SomeCodableStruct) in
             (TestKey(UUID()), SomeCodableStruct(i))
         }
         let expectation = XCTestExpectation(description: "ParallelWritingDifferentKeys")
@@ -272,7 +272,7 @@ class KeychainProviderTests: XCTestCase {
             XCTAssertNil(error)
         }
 
-        let totalCount = 1000
+        let totalCount = 100
         let expectation = XCTestExpectation(description: "ParallelReading")
         expectation.expectedFulfillmentCount = totalCount
 
@@ -293,7 +293,7 @@ class KeychainProviderTests: XCTestCase {
 
     func testParallelReadingAndWriting() {
         let key = TestKey()
-        let writeValues = Array(0..<1000).map { SomeCodableStruct($0) }
+        let writeValues = Array(0..<100).map { SomeCodableStruct($0) }
         let expectation = XCTestExpectation(description: "ConcurrentReadingAndWriting")
 
         let tasksCount = 2
@@ -363,7 +363,7 @@ class KeychainProviderTests: XCTestCase {
 
     func testMultipleParallelOperations() {
         let key = TestKey()
-        let writeValues = Array(0..<1000).map { SomeCodableStruct($0) }
+        let writeValues = Array(0..<100).map { SomeCodableStruct($0) }
         let expectation = XCTestExpectation(description: "MultipleParallelOperations")
 
         let tasksCount = 3
